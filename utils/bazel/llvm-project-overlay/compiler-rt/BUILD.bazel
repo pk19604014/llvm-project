@@ -1,0 +1,18 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "FuzzerMain",
+    srcs = glob(
+        ["lib/fuzzer/Fuzzer*.cpp"],
+    ),
+    hdrs = glob([
+        "lib/fuzzer/Fuzzer*.h",
+        "lib/fuzzer/Fuzzer*.def",
+    ]),
+    copts = [
+      # Not using no-sanitize=address per https://github.com/google/sanitizers/wiki/AddressSanitizerContainerOverflow#false-positives
+      "-fno-sanitize=memory,thread,undefined",
+      "-fsanitize-coverage=0",
+    ],
+    includes = ["lib/fuzzer"],
+)
